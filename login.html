@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Login | Trade Journal</title>
+
+  <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     body {
       margin: 0;
@@ -52,17 +55,25 @@
 </div>
 
 <script>
-  // 🔁 REPLACE THESE TWO VALUES
+  // 🔴 REPLACE THESE WITH YOUR REAL VALUES
   const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
   const SUPABASE_KEY = "sb_publishable_XXXXXXXXXXXXXXXX";
 
-  const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_KEY);
+  // ✅ CORRECT CLIENT CREATION
+  const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
   async function signUp() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { error } = await supabaseClient.auth.signUp({
+      email,
+      password
+    });
+
     document.getElementById("msg").innerText =
       error ? error.message : "Signup successful. Now login.";
   }
@@ -71,14 +82,4 @@
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email, password
-    });
-
-    document.getElementById("msg").innerText =
-      error ? error.message : "Logged in successfully ✅";
-  }
-</script>
-
-</body>
-</html>
+    const { error } = await supabaseClient.auth.si
