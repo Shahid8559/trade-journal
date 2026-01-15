@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Trade Journal</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #0b0f1a;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .box {
+      background: #121826;
+      padding: 24px;
+      border-radius: 12px;
+      width: 320px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    button {
+      background: #f5c451;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    p {
+      font-size: 13px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Login</h2>
+
+  <input id="email" type="email" placeholder="Email" />
+  <input id="password" type="password" placeholder="Password" />
+
+  <button onclick="signUp()">Sign Up</button>
+  <button onclick="login()">Login</button>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+  // 🔁 REPLACE THESE TWO VALUES
+  const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_XXXXXXXXXXXXXXXX";
+
+  const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  async function signUp() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { error } = await supabase.auth.signUp({ email, password });
+    document.getElementById("msg").innerText =
+      error ? error.message : "Signup successful. Now login.";
+  }
+
+  async function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email, password
+    });
+
+    document.getElementById("msg").innerText =
+      error ? error.message : "Logged in successfully ✅";
+  }
+</script>
+
+</body>
+</html>
