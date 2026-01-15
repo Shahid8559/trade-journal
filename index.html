@@ -8,3 +8,73 @@
   <p>Site is live 🚀</p>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Journal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Trading Journal</h1>
+        <nav>
+            <button id="loginBtn">Login</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="stats">
+            <h2>Stats</h2>
+            <p>Win Rate: <span id="winRate">0%</span></p>
+            <p>Expectancy: <span id="expectancy">0</span></p>
+        </section>
+
+        <section id="journal">
+            <h2>Trade Journal</h2>
+            <table id="tradesTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Pair</th>
+                        <th>Direction</th>
+                        <th>Entry</th>
+                        <th>Exit</th>
+                        <th>Profit/Loss</th>
+                        <th>Notes</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Trades will appear here -->
+                </tbody>
+            </table>
+            <button id="addTradeBtn">Add Trade</button>
+        </section>
+    </main>
+
+    <!-- Modal for Adding Trade -->
+    <div id="tradeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Trade</h2>
+            <form id="tradeForm">
+                <input type="date" id="date" required>
+                <input type="text" id="pair" placeholder="Pair (e.g., BTC/USD)" required>
+                <select id="direction" required>
+                    <option value="Buy">Buy</option>
+                    <option value="Sell">Sell</option>
+                </select>
+                <input type="number" id="entry" placeholder="Entry Price" required>
+                <input type="number" id="exit" placeholder="Exit Price" required>
+                <input type="number" id="profit" placeholder="Profit/Loss" required>
+                <textarea id="notes" placeholder="Notes"></textarea>
+                <button type="submit">Add Trade</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
