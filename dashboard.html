@@ -172,11 +172,11 @@
     <div class="stats">
       <div class="stat">
         <p>Total PnL</p>
-        <h2>$7,032.50</h2>
+        <h2 id="totalPnl">$0</h2>
       </div>
       <div class="stat">
         <p>Win Rate</p>
-        <h2>42.4%</h2>
+        <h2 id="winRate">0%</h2>
       </div>
       <div class="stat">
         <p>Avg RR</p>
@@ -251,6 +251,45 @@
     ">Cancel</button>
   </div>
 </div>
+<script>
+  const modal = document.getElementById("tradeModal");
+  const pnlEl = document.getElementById("totalPnl");
+  const winEl = document.getElementById("winRate");
+
+  let trades = JSON.parse(localStorage.getItem("trades")) || [];
+
+  document.getElementById("addTradeBtn").onclick = () => {
+    modal.style.display = "flex";
+  };
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  function saveTrade() {
+    const pnl = Number(document.getElementById("pnlInput").value);
+    if (isNaN(pnl)) return;
+
+    trades.push({ pnl });
+    localStorage.setItem("trades", JSON.stringify(trades));
+    document.getElementById("pnlInput").value = "";
+    closeModal();
+    updateStats();
+  }
+
+  function updateStats() {
+    let total = trades.reduce((s, t) => s + t.pnl, 0);
+    let wins = trades.filter(t => t.pnl > 0).length;
+    let winRate = trades.length
+      ? Math.round((wins / trades.length) * 100)
+      : 0;
+
+    pnlEl.textContent = "$" + total.toFixed(2);
+    winEl.textContent = winRate + "%";
+  }
+
+  updateStats();
+</script>
 
 </body>
 </html>
