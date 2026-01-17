@@ -14,7 +14,7 @@
 
     .container {
       padding: 24px;
-      max-width: 1200px;
+      max-width: 1000px;
       margin: auto;
     }
 
@@ -26,7 +26,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
 
     .card {
@@ -46,33 +46,14 @@
       font-size: 22px;
     }
 
-    .calendar {
-      background: #121826;
-      padding: 20px;
-      border-radius: 12px;
-    }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
+    button {
       margin-top: 10px;
-    }
-
-    .day {
-      height: 80px;
-      background: #1f2937;
-      border-radius: 8px;
-      padding: 6px;
-      font-size: 12px;
-    }
-
-    .profit {
-      background: #064e3b;
-    }
-
-    .loss {
-      background: #3f1d25;
+      padding: 10px;
+      width: 100%;
+      background: #f5c451;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     a {
@@ -83,46 +64,54 @@
 </head>
 
 <body>
+  <div class="container">
+    <h1>📊 Trade Dashboard</h1>
 
-<div class="container">
-  <h1>📊 Trade Dashboard</h1>
+    <div class="stats">
+      <div class="card">
+        <p>Total PnL</p>
+        <h2 id="pnl">$0</h2>
+        <button onclick="addProfit()">Add +$100</button>
+      </div>
 
-  <div class="stats">
-    <div class="card">
-      <p>Total PnL</p>
-      <h2>$2,450</h2>
+      <div class="card">
+        <p>Total Trades</p>
+        <h2 id="trades">0</h2>
+        <button onclick="addTrade()">Add Trade</button>
+      </div>
+
+      <div class="card">
+        <p>Win Rate</p>
+        <h2 id="winrate">0%</h2>
+      </div>
     </div>
-    <div class="card">
-      <p>Win Rate</p>
-      <h2>62%</h2>
-    </div>
-    <div class="card">
-      <p>Avg RR</p>
-      <h2>1 : 2.1</h2>
-    </div>
-    <div class="card">
-      <p>Max Drawdown</p>
-      <h2>-6.4%</h2>
-    </div>
+
+    <a href="index.html">← Back to Home</a>
   </div>
 
-  <div class="calendar">
-    <h3>Daily Performance</h3>
+<script>
+  let pnl = 0;
+  let trades = 0;
+  let wins = 0;
 
-    <div class="calendar-grid">
-      <div class="day profit">1<br>+2R</div>
-      <div class="day loss">2<br>-1R</div>
-      <div class="day profit">3<br>+1.5R</div>
-      <div class="day"></div>
-      <div class="day profit">5<br>+3R</div>
-      <div class="day loss">6<br>-2R</div>
-      <div class="day"></div>
-    </div>
-  </div>
+  function addProfit() {
+    pnl += 100;
+    wins++;
+    update();
+  }
 
-  <br>
-  <a href="index.html">← Back to Home</a>
-</div>
+  function addTrade() {
+    trades++;
+    update();
+  }
+
+  function update() {
+    document.getElementById("pnl").innerText = "$" + pnl;
+    document.getElementById("trades").innerText = trades;
+    document.getElementById("winrate").innerText =
+      trades === 0 ? "0%" : Math.round((wins / trades) * 100) + "%";
+  }
+</script>
 
 </body>
 </html>
