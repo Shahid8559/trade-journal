@@ -1,117 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard | Trade Journal</title>
+  <meta charset="UTF-8" />
+  <title>Trade Journal Dashboard</title>
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
+      font-family: Inter, Arial, sans-serif;
       background: #0b0f1a;
-      color: white;
-      font-family: Arial, sans-serif;
+      color: #e5e7eb;
+      display: flex;
+      height: 100vh;
     }
 
-    .container {
-      padding: 24px;
-      max-width: 1000px;
-      margin: auto;
+    /* SIDEBAR */
+    .sidebar {
+      width: 220px;
+      background: #0e1322;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    h1 {
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #a78bfa;
       margin-bottom: 20px;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+    .nav a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #c7d2fe;
+      text-decoration: none;
+      font-size: 14px;
     }
 
-    .card {
+    .nav a.active,
+    .nav a:hover {
+      background: #1a2040;
+      color: white;
+    }
+
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat {
       background: #121826;
       padding: 16px;
       border-radius: 12px;
     }
 
-    .card p {
+    .stat p {
       margin: 0;
+      font-size: 13px;
       color: #9ca3af;
-      font-size: 14px;
     }
 
-    .card h2 {
-      margin-top: 8px;
+    .stat h2 {
+      margin-top: 6px;
       font-size: 22px;
+      color: white;
     }
 
-    button {
-      margin-top: 10px;
-      padding: 10px;
-      width: 100%;
-      background: #f5c451;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
+    /* CALENDAR */
+    .calendar {
+      background: #121826;
+      padding: 20px;
+      border-radius: 12px;
     }
 
-    a {
-      color: #f5c451;
-      text-decoration: none;
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
     }
-  </style>
-</head>
 
-<body>
-  <div class="container">
-    <h1>📊 Trade Dashboard</h1>
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
 
-    <div class="stats">
-      <div class="card">
-        <p>Total PnL</p>
-        <h2 id="pnl">$0</h2>
-        <button onclick="addProfit()">Add +$100</button>
-      </div>
-
-      <div class="card">
-        <p>Total Trades</p>
-        <h2 id="trades">0</h2>
-        <button onclick="addTrade()">Add Trade</button>
-      </div>
-
-      <div class="card">
-        <p>Win Rate</p>
-        <h2 id="winrate">0%</h2>
-      </div>
-    </div>
-
-    <a href="index.html">← Back to Home</a>
-  </div>
-
-<script>
-  let pnl = 0;
-  let trades = 0;
-  let wins = 0;
-
-  function addProfit() {
-    pnl += 100;
-    wins++;
-    update();
-  }
-
-  function addTrade() {
-    trades++;
-    update();
-  }
-
-  function update() {
-    document.getElementById("pnl").innerText = "$" + pnl;
-    document.getElementById("trades").innerText = trades;
-    document.getElementById("winrate").innerText =
-      trades === 0 ? "0%" : Math.round((wins / trades) * 100) + "%";
-  }
-</script>
-
-</body>
-</html>
+    .day {
+      height: 90px;
+      border-radius: 10px;
+      background: #1f2937
