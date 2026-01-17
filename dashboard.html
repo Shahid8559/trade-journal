@@ -208,6 +208,49 @@
 
     <a class="back" href="index.html">← Back to Home</a>
   </div>
+<!-- ADD TRADE MODAL -->
+<div id="tradeModal" style="
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+">
+  <div style="
+    background:#121826;
+    padding:20px;
+    border-radius:12px;
+    width:300px;
+  ">
+    <h3>Add Trade</h3>
+
+    <label>PnL ($)</label>
+    <input id="pnlInput" type="number" style="width:100%;padding:8px;margin:8px 0">
+
+    <button onclick="saveTrade()" style="
+      width:100%;
+      background:#22c55e;
+      border:none;
+      padding:10px;
+      border-radius:8px;
+      font-weight:600;
+      cursor:pointer;
+    ">Save Trade</button>
+
+    <button onclick="closeModal()" style="
+      width:100%;
+      background:#374151;
+      border:none;
+      padding:10px;
+      border-radius:8px;
+      margin-top:8px;
+      cursor:pointer;
+      color:white;
+    ">Cancel</button>
+  </div>
+</div>
 
 </body>
 </html>
