@@ -195,16 +195,17 @@
         <span>Daily Performance</span>
       </div>
 
-      <div class="calendar-grid">
-        <div class="day profit">1<br>+2R</div>
-        <div class="day loss">2<br>-1R</div>
-        <div class="day profit">3<br>+1.5R</div>
-        <div class="day"></div>
-        <div class="day profit">5<br>+3R</div>
-        <div class="day loss">6<br>-2R</div>
-        <div class="day"></div>
-      </div>
-    </div>
+      
+<div class="calendar-grid">
+  <div class="day" data-day="1">1</div>
+  <div class="day" data-day="2">2</div>
+  <div class="day" data-day="3">3</div>
+  <div class="day" data-day="4">4</div>
+  <div class="day" data-day="5">5</div>
+  <div class="day" data-day="6">6</div>
+  <div class="day" data-day="7">7</div>
+</div>
+</div>
 
     <a class="back" href="index.html">← Back to Home</a>
   </div>
@@ -270,7 +271,13 @@
     const pnl = Number(document.getElementById("pnlInput").value);
     if (isNaN(pnl)) return;
 
-    trades.push({ pnl });
+    const today = new Date().getDate();
+
+trades.push({
+  pnl,
+  day: today
+});
+
     localStorage.setItem("trades", JSON.stringify(trades));
     document.getElementById("pnlInput").value = "";
     closeModal();
@@ -289,6 +296,33 @@
   }
 
   updateStats();
+  // Reset calendar
+document.querySelectorAll(".day").forEach(d => {
+  d.classList.remove("profit", "loss");
+  d.innerHTML = d.dataset.day;
+});
+
+// Group PnL by day
+const dayTotals = {};
+
+trades.forEach(t => {
+  dayTotals[t.day] = (dayTotals[t.day] || 0) + t.pnl;
+});
+
+// Apply colors
+document.querySelectorAll(".day").forEach(d => {
+  const day = Number(d.dataset.day);
+  const total = dayTotals[day];
+
+  if (total > 0) {
+    d.classList.add("profit");
+    d.innerHTML = `${day}<br>+$${total}`;
+  } else if (total < 0) {
+    d.classList.add("loss");
+    d.innerHTML = `${day}<br>-$${Math.abs(total)}`;
+  }
+});
+
 </script>
 
 </body>
