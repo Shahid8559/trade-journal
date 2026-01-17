@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Trade Journal</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #0b0f1a;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      padding: 24px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: #121826;
+      padding: 16px;
+      border-radius: 12px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .card h2 {
+      margin-top: 8px;
+      font-size: 22px;
+    }
+
+    .calendar {
+      background: #121826;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .day {
+      height: 80px;
+      background: #1f2937;
+      border-radius: 8px;
+      padding: 6px;
+      font-size: 12px;
+    }
+
+    .profit {
+      background: #064e3b;
+    }
+
+    .loss {
+      background: #3f1d25;
+    }
+
+    a {
+      color: #f5c451;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>📊 Trade Dashboard</h1>
+
+  <div class="stats">
+    <div class="card">
+      <p>Total PnL</p>
+      <h2>$2,450</h2>
+    </div>
+    <div class="card">
+      <p>Win Rate</p>
+      <h2>62%</h2>
+    </div>
+    <div class="card">
+      <p>Avg RR</p>
+      <h2>1 : 2.1</h2>
+    </div>
+    <div class="card">
+      <p>Max Drawdown</p>
+      <h2>-6.4%</h2>
+    </div>
+  </div>
+
+  <div class="calendar">
+    <h3>Daily Performance</h3>
+
+    <div class="calendar-grid">
+      <div class="day profit">1<br>+2R</div>
+      <div class="day loss">2<br>-1R</div>
+      <div class="day profit">3<br>+1.5R</div>
+      <div class="day"></div>
+      <div class="day profit">5<br>+3R</div>
+      <div class="day loss">6<br>-2R</div>
+      <div class="day"></div>
+    </div>
+  </div>
+
+  <br>
+  <a href="index.html">← Back to Home</a>
+</div>
+
+</body>
+</html>
