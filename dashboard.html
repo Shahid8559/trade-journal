@@ -109,4 +109,91 @@
     .day {
       height: 90px;
       border-radius: 10px;
-      background: #1f2937
+      background: #1f2937;
+      padding: 8px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .profit {
+      background: #064e3b;
+      color: #d1fae5;
+    }
+
+    .loss {
+      background: #3f1d25;
+      color: #fee2e2;
+    }
+
+    .back {
+      margin-top: 20px;
+      display: inline-block;
+      color: #facc15;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo">📈 Trade Journal</div>
+
+    <div class="nav">
+      <a class="active" href="#">Dashboard</a>
+      <a href="#">Daily Journal</a>
+      <a href="#">Trades</a>
+      <a href="#">Backtesting</a>
+      <a href="#">Reports</a>
+      <a href="#">Settings</a>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <h1>Dashboard</h1>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <p>Total PnL</p>
+        <h2>$7,032.50</h2>
+      </div>
+      <div class="stat">
+        <p>Win Rate</p>
+        <h2>42.4%</h2>
+      </div>
+      <div class="stat">
+        <p>Avg RR</p>
+        <h2>1 : 2.1</h2>
+      </div>
+      <div class="stat">
+        <p>Max Drawdown</p>
+        <h2>-6.4%</h2>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="calendar">
+      <div class="calendar-header">
+        <strong>June 2024</strong>
+        <span>Daily Performance</span>
+      </div>
+
+      <div class="calendar-grid">
+        <div class="day profit">1<br>+2R</div>
+        <div class="day loss">2<br>-1R</div>
+        <div class="day profit">3<br>+1.5R</div>
+        <div class="day"></div>
+        <div class="day profit">5<br>+3R</div>
+        <div class="day loss">6<br>-2R</div>
+        <div class="day"></div>
+      </div>
+    </div>
+
+    <a class="back" href="index.html">← Back to Home</a>
+  </div>
+
+</body>
+</html>
