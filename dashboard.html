@@ -240,15 +240,20 @@
     <label>PnL ($)</label>
     <input id="pnlInput" type="number" style="width:100%;padding:8px;margin:8px 0">
 
-    <button onclick="saveTrade(this)" style="...">
-      width:100%;
-      background:#22c55e;
-      border:none;
-      padding:10px;
-      border-radius:8px;
-      font-weight:600;
-      cursor:pointer;
-    ">Save Trade</button>
+    <button
+  onclick="saveTrade(this)"
+  style="
+    width:100%;
+    background:#22c55e;
+    border:none;
+    padding:10px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+  "
+>
+  Save Trade
+</button>
 
     <button onclick="closeModal()" style="
       width:100%;
@@ -278,7 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
   modal.style.display = "flex";
 };
 
-  saveBtn.disabled = false;
   window.closeModal = () => {
   modal.style.display = "none";
   addBtn.disabled = false;
