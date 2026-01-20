@@ -332,13 +332,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("winsCount").innerText = wins;
     document.getElementById("lossCount").innerText = trades.length - wins;
 
-    drawEquityCurve(); // 👈 IMPORTANT
+    drawEquityCurve(); // 
   }
-  // 🔴 updateStats ENDS HERE
-  // =========================
 
-  // ✅ 2. PLACE drawEquityCurve RIGHT HERE
-  function drawEquityCurve() {
+   function drawEquityCurve() {
     const canvas = document.getElementById("equityChart");
     const ctx = canvas.getContext("2d");
 
@@ -374,10 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ctx.stroke();
   }
-  // 🔴 drawEquityCurve ENDS HERE
-  // ============================
-
-  updateStats(); // run once on page load
+  updateStats(); 
 
 });
 </script>
@@ -420,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  drawEquityCurve(); // ✅ IMPORTANT
+  drawEquityCurve();
 }
 
 });
