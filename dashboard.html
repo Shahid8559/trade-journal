@@ -115,9 +115,18 @@
   </div>
 
   <div style="margin-top:30px;background:#121826;padding:20px;border-radius:12px;">
-    <h3>Equity Curve</h3>
-    <canvas id="equityChart" width="800" height="200" style="width:100%;"></canvas>
+  <h3>Performance</h3>
+
+  <div style="margin-bottom:8px;font-size:14px;">
+    Max Drawdown: <strong id="maxDD">0%</strong>
   </div>
+
+  <canvas id="equityChart" width="800" height="200" style="width:100%;"></canvas>
+
+  <canvas id="ddChart" width="800" height="120"
+    style="width:100%;margin-top:12px;"></canvas>
+</div>
+
 
 </div>
 
@@ -206,28 +215,63 @@ document.addEventListener("DOMContentLoaded", () => {
     drawChart();
   }
 
-  function drawChart() {
-    const c = document.getElementById("equityChart");
-    const ctx = c.getContext("2d");
-    ctx.clearRect(0,0,c.width,c.height);
+function drawChart() {
+  const eqCanvas = document.getElementById("equityChart");
+  const ddCanvas = document.getElementById("ddChart");
 
-    let eq = 0;
-    const pts = trades.map(t => (eq += t.pnl));
-    if (!pts.length) return;
+  const eqCtx = eqCanvas.getContext("2d");
+  const ddCtx = ddCanvas.getContext("2d");
 
-    const max = Math.max(...pts), min = Math.min(...pts);
-    ctx.beginPath();
-    pts.forEach((v,i) => {
-      const x = i/(pts.length-1||1)*c.width;
-      const y = c.height - ((v-min)/(max-min||1))*c.height;
-      i ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
-    });
-    ctx.strokeStyle = "#22c55e";
-    ctx.stroke();
-  }
+  eqCtx.clearRect(0, 0, eqCanvas.width, eqCanvas.height);
+  ddCtx.clearRect(0, 0, ddCanvas.width, ddCanvas.height);
 
-  update();
-});
+  let equity = 0;
+  let peak = 0;
+  let maxDrawdown = 0;
+
+  const equityPoints = [];
+  const ddPoints = [];
+
+  trades.forEach(t => {
+    equity += t.pnl;
+    peak = Math.max(peak, equity);
+
+    const dd = peak === 0 ? 0 : ((equity - peak) / peak) * 100;
+
+    equityPoints.push(equity);
+    ddPoints.push(dd);
+
+    maxDrawdown = Math.min(maxDrawdown, dd);
+  });
+
+  document.getElementById("maxDD").innerText =
+    maxDrawdown.toFixed(2) + "%";
+
+  drawLine(eqCtx, eqCanvas, equityPoints, "#22c55e");
+  drawLine(ddCtx, ddCanvas, ddPoints, "#ef4444");
+}
+function drawLine(ctx, canvas, points, color) {
+  if (!points.length) return;
+
+  const max = Math.max(...points);
+  const min = Math.min(...points);
+  const range = max - min || 1;
+
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+
+  points.forEach((v, i) => {
+    const x = (i / (points.length - 1 || 1)) * canvas.width;
+    const y =
+      canvas.height -
+      ((v - min) / range) * canvas.height;
+
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+}
 </script>
 
 </body>
