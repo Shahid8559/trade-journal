@@ -278,15 +278,17 @@ document.addEventListener("DOMContentLoaded", () => {
   modal.style.display = "flex";
 };
 
+  saveBtn.disabled = false;
+  window.closeModal = () => {
+  modal.style.display = "none";
+  addBtn.disabled = false;
+  addBtn.style.opacity = "1";
+};
 
-  window.closeModal = function () {
-    modal.style.display = "none";
-  };
+  window.saveTrade = () => {
+  const saveBtn = event.target;
+  saveBtn.disabled = true;
 
-  window.saveTrade = function () {
-    const pnlInput = document.getElementById("pnlInput");
-    const pnl = Number(pnlInput.value);
-    if (isNaN(pnl)) return;
 
     const today = new Date().getDate();
 
@@ -320,19 +322,29 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "none";
   };
 
-  window.saveTrade = () => {
-    const pnlInput = document.getElementById("pnlInput");
-    const pnl = Number(pnlInput.value);
-    if (isNaN(pnl)) return;
+  window.saveTrade = (event) => {
+  const saveBtn = event.target;
+  saveBtn.disabled = true;
 
-    const today = new Date().getDate();
+  const pnlInput = document.getElementById("pnlInput");
+  const pnl = Number(pnlInput.value);
 
-    trades.push({ pnl, day: today });
-    localStorage.setItem("trades", JSON.stringify(trades));
+  if (isNaN(pnl)) {
+    saveBtn.disabled = false;
+    return;
+  }
 
-    pnlInput.value = "";
-    closeModal();
-    updateStats();
+  const today = new Date().getDate();
+
+  trades.push({ pnl, day: today });
+  localStorage.setItem("trades", JSON.stringify(trades));
+
+  pnlInput.value = "";
+  saveBtn.disabled = false;
+  closeModal();
+  updateStats();
+};
+
   };
 
   function updateStats() {
