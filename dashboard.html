@@ -273,8 +273,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let trades = JSON.parse(localStorage.getItem("trades")) || [];
 
   addBtn.onclick = () => {
-    modal.style.display = "flex";
-  };
+  addBtn.disabled = true;
+  addBtn.style.opacity = "0.6";
+  modal.style.display = "flex";
+};
+
 
   window.closeModal = function () {
     modal.style.display = "none";
