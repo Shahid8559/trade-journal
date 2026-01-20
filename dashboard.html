@@ -194,7 +194,17 @@
         <strong>June 2024</strong>
         <span>Daily Performance</span>
       </div>
+      <!-- REPORTS -->
+<div style="margin-top:30px; background:#121826; padding:20px; border-radius:12px;">
+  <h3>Performance Report</h3>
 
+  <canvas id="equityChart" height="120" style="width:100%; margin-top:10px;"></canvas>
+
+  <div style="display:flex; gap:20px; margin-top:14px; font-size:14px;">
+    <div>Wins: <strong id="winsCount">0</strong></div>
+    <div>Losses: <strong id="lossCount">0</strong></div>
+  </div>
+</div>
       
 <div class="calendar-grid">
   <div class="day" data-day="1">1</div>
@@ -325,6 +335,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateStats();
 });
+  // ---- REPORTS ----
+document.getElementById("winsCount").innerText = wins;
+document.getElementById("lossCount").innerText = trades.length - wins;
+
+drawEquityCurve();
+function drawEquityCurve() {
+  const canvas = document.getElementById("equityChart");
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (trades.length === 0) return;
+
+  let equity = 0;
+  const points = trades.map(t => {
+    equity += t.pnl;
+    return equity;
+  });
+
+  const max = Math.max(...points, 0);
+  const min = Math.min(...points, 0);
+  const range = max - min || 1;
+
+  const padding = 20;
+  const w = canvas.width;
+  const h = canvas.height;
+
+  ctx.strokeStyle = "#22c55e";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+
+  points.forEach((val, i) => {
+    const x = padding + (i / (points.length - 1 || 1)) * (w - padding * 2);
+    const y = h - padding - ((val - min) / range) * (h - padding * 2);
+
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+}
 </script>
 
 
