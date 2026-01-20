@@ -253,63 +253,80 @@
   </div>
 </div>
 <script>
+document.addEventListener("DOMContentLoaded", () => {
+
   const modal = document.getElementById("tradeModal");
   const pnlEl = document.getElementById("totalPnl");
   const winEl = document.getElementById("winRate");
+  const addBtn = document.getElementById("addTradeBtn");
 
   let trades = JSON.parse(localStorage.getItem("trades")) || [];
 
-  document.getElementById("addTradeBtn").onclick = () => {
+  addBtn.onclick = () => {
     modal.style.display = "flex";
   };
 
-  <script>
-function updateStats() {
-  let total = 0;
-  let wins = 0;
-  const dayTotals = {};
+  window.closeModal = function () {
+    modal.style.display = "none";
+  };
 
-  trades.forEach(t => {
-    total += t.pnl;
-    if (t.pnl > 0) wins++;
+  window.saveTrade = function () {
+    const pnlInput = document.getElementById("pnlInput");
+    const pnl = Number(pnlInput.value);
+    if (isNaN(pnl)) return;
 
-    if (t.day) {
+    const today = new Date().getDate();
+
+    trades.push({ pnl, day: today });
+    localStorage.setItem("trades", JSON.stringify(trades));
+
+    pnlInput.value = "";
+    closeModal();
+    updateStats();
+  };
+
+  function updateStats() {
+    let total = 0;
+    let wins = 0;
+    const dayTotals = {};
+
+    trades.forEach(t => {
+      total += t.pnl;
+      if (t.pnl > 0) wins++;
+
       dayTotals[t.day] = (dayTotals[t.day] || 0) + t.pnl;
-    }
-  });
+    });
 
-  const winRate = trades.length
-    ? Math.round((wins / trades.length) * 100)
-    : 0;
+    const winRate = trades.length
+      ? Math.round((wins / trades.length) * 100)
+      : 0;
 
-  document.getElementById("totalPnl").textContent =
-    "$" + total.toFixed(2);
+    pnlEl.textContent = "$" + total.toFixed(2);
+    winEl.textContent = winRate + "%";
 
-  document.getElementById("winRate").textContent =
-    winRate + "%";
+    document.querySelectorAll(".day").forEach(d => {
+      d.classList.remove("profit", "loss");
+      d.innerHTML = d.dataset.day;
+    });
 
-  // RESET CALENDAR
-  document.querySelectorAll(".day").forEach(d => {
-    d.classList.remove("profit", "loss");
-    d.innerHTML = d.dataset.day;
-  });
+    document.querySelectorAll(".day").forEach(d => {
+      const day = Number(d.dataset.day);
+      const totalDay = dayTotals[day];
 
-  // APPLY DAILY COLORS
-  document.querySelectorAll(".day").forEach(d => {
-    const day = Number(d.dataset.day);
-    const totalDay = dayTotals[day];
+      if (totalDay > 0) {
+        d.classList.add("profit");
+        d.innerHTML = `${day}<br>+$${totalDay}`;
+      } else if (totalDay < 0) {
+        d.classList.add("loss");
+        d.innerHTML = `${day}<br>-$${Math.abs(totalDay)}`;
+      }
+    });
+  }
 
-    if (totalDay > 0) {
-      d.classList.add("profit");
-      d.innerHTML = `${day}<br>+$${totalDay}`;
-    } 
-    else if (totalDay < 0) {
-      d.classList.add("loss");
-      d.innerHTML = `${day}<br>-$${Math.abs(totalDay)}`;
-    }
-  });
-}
+  updateStats();
+});
 </script>
+
 
 </body>
 </html>
