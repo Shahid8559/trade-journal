@@ -240,7 +240,7 @@
     <label>PnL ($)</label>
     <input id="pnlInput" type="number" style="width:100%;padding:8px;margin:8px 0">
 
-    <button onclick="saveTrade()" style="
+    <button onclick="saveTrade(this)" style="...">
       width:100%;
       background:#22c55e;
       border:none;
@@ -285,21 +285,28 @@ document.addEventListener("DOMContentLoaded", () => {
   addBtn.style.opacity = "1";
 };
 
-  window.saveTrade = () => {
-  const saveBtn = event.target;
-  saveBtn.disabled = true;
+window.saveTrade = (btn) => {
+  btn.disabled = true;
 
+  const pnlInput = document.getElementById("pnlInput");
+  const pnl = Number(pnlInput.value);
 
-    const today = new Date().getDate();
+  if (isNaN(pnl)) {
+    btn.disabled = false;
+    return;
+  }
 
-    trades.push({ pnl, day: today });
-    localStorage.setItem("trades", JSON.stringify(trades));
+  const today = new Date().getDate();
 
-    pnlInput.value = "";
-    closeModal();
-    updateStats();
-  };
+  trades.push({ pnl, day: today });
+  localStorage.setItem("trades", JSON.stringify(trades));
 
+  pnlInput.value = "";
+  btn.disabled = false;
+  closeModal();
+  updateStats();
+};
+  
 function updateStats() {
   let total = 0;
   let wins = 0;
