@@ -140,8 +140,7 @@
 
     <input id="pnlInput" type="number" placeholder="PnL"
       style="width:100%;padding:8px;margin:8px 0">
-
-    <button onclick="saveTrade(this)" style="
+   <button onclick="closeModal()">Cancel</button>
       width:100%;background:#22c55e;border:none;
       padding:10px;border-radius:8px;">
       Save Trade
@@ -169,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.closeModal = () => {
+    addBtn.disabled = false;
     modal.style.display = "none";
     addBtn.disabled = false;
   };
