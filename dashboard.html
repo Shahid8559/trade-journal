@@ -263,66 +263,52 @@
     modal.style.display = "flex";
   };
 
-  function closeModal() {
-    modal.style.display = "none";
-  }
+  <script>
+function updateStats() {
+  let total = 0;
+  let wins = 0;
+  const dayTotals = {};
 
-  function saveTrade() {
-    const pnl = Number(document.getElementById("pnlInput").value);
-    if (isNaN(pnl)) return;
+  trades.forEach(t => {
+    total += t.pnl;
+    if (t.pnl > 0) wins++;
 
-    const today = new Date().getDate();
+    if (t.day) {
+      dayTotals[t.day] = (dayTotals[t.day] || 0) + t.pnl;
+    }
+  });
 
-trades.push({
-  pnl,
-  day: today
-});
+  const winRate = trades.length
+    ? Math.round((wins / trades.length) * 100)
+    : 0;
 
-    localStorage.setItem("trades", JSON.stringify(trades));
-    document.getElementById("pnlInput").value = "";
-    closeModal();
-    updateStats();
-  }
+  document.getElementById("totalPnl").textContent =
+    "$" + total.toFixed(2);
 
-  function updateStats() {
-    let total = trades.reduce((s, t) => s + t.pnl, 0);
-    let wins = trades.filter(t => t.pnl > 0).length;
-    let winRate = trades.length
-      ? Math.round((wins / trades.length) * 100)
-      : 0;
+  document.getElementById("winRate").textContent =
+    winRate + "%";
 
-    pnlEl.textContent = "$" + total.toFixed(2);
-    winEl.textContent = winRate + "%";
-  }
+  // RESET CALENDAR
+  document.querySelectorAll(".day").forEach(d => {
+    d.classList.remove("profit", "loss");
+    d.innerHTML = d.dataset.day;
+  });
 
-  updateStats();
-  // Reset calendar
-document.querySelectorAll(".day").forEach(d => {
-  d.classList.remove("profit", "loss");
-  d.innerHTML = d.dataset.day;
-});
+  // APPLY DAILY COLORS
+  document.querySelectorAll(".day").forEach(d => {
+    const day = Number(d.dataset.day);
+    const totalDay = dayTotals[day];
 
-// Group PnL by day
-const dayTotals = {};
-
-trades.forEach(t => {
-  dayTotals[t.day] = (dayTotals[t.day] || 0) + t.pnl;
-});
-
-// Apply colors
-document.querySelectorAll(".day").forEach(d => {
-  const day = Number(d.dataset.day);
-  const total = dayTotals[day];
-
-  if (total > 0) {
-    d.classList.add("profit");
-    d.innerHTML = `${day}<br>+$${total}`;
-  } else if (total < 0) {
-    d.classList.add("loss");
-    d.innerHTML = `${day}<br>-$${Math.abs(total)}`;
-  }
-});
-
+    if (totalDay > 0) {
+      d.classList.add("profit");
+      d.innerHTML = `${day}<br>+$${totalDay}`;
+    } 
+    else if (totalDay < 0) {
+      d.classList.add("loss");
+      d.innerHTML = `${day}<br>-$${Math.abs(totalDay)}`;
+    }
+  });
+}
 </script>
 
 </body>
